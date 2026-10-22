@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Interaktif - Pecahan Kelas 5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        burgundy: {
+                            50: '#fdf2f4',
+                            100: '#fbe6e9',
+                            200: '#f7d0d7',
+                            300: '#f0abb8',
+                            400: '#e57991',
+                            500: '#d54d6f',
+                            600: '#bf2f53',
+                            700: '#a02141',
+                            800: '#851e3a',
+                            900: '#701c34',
+                            950: '#3e0a19',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #3e0a19 0%, #701c34 50%, #851e3a 100%);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #851e3a;
+            border-radius: 10px;
+        }
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        .pulse-btn {
+            animation: pulse-slow 3s infinite;
+        }
+        /* Snakes & Ladders Board Styles */
+        .board-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
+        }
+        .tile-gradient-1 { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+        .tile-gradient-2 { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
+        .tile-gradient-3 { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+        .tile-gradient-snake { background: linear-gradient(135deg, #fecdd3, #f43f5e); color: white; }
+        .tile-gradient-ladder { background: linear-gradient(135deg, #fef08a, #eab308); color: #78350f; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-burgundy-500 selection:text-white flex flex-col min-h-screen custom-scrollbar">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 bg-burgundy-950/90 backdrop-blur-md border-b border-burgundy-700/50 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-gold-500 to-burgundy-400 flex items-center justify-center font-bold text-lg shadow-md text-burgundy-950">
+                    <i class="fa-solid fa-shapes"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg sm:text-xl tracking-wide bg-gradient-to-r from-amber-200 via-rose-200 to-white bg-clip-text text-transparent">MATH PECAHAN</h1>
+                    <p class="text-xs text-burgundy-300 font-medium hidden sm:block">Media Pembelajaran Kelas 5 SD</p>
+                </div>
+            </div>
+
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden text-burgundy-200 hover:text-white p-2">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+
+            <!-- Navigation Links -->
+            <nav id="desktop-nav" class="hidden lg:flex items-center space-x-1 text-sm font-semibold">
+                <button onclick="switchTab('home')" class="nav-btn px-3 py-2 rounded-lg hover:bg-burgundy-800/60 transition text-burgundy-100 flex items-center gap-2"><i class="fa-solid fa-house"></i> Beranda</button>
+                <button onclick="switchTab('cp-tp')" class="nav-btn px-3 py-2 rounded-lg hover:bg-burgundy-800/60 transition text-burgundy-100 flex items-center gap-2"><i class="fa-solid fa-bullseye"></i> CP & TP</button>
+                <button onclick="switchTab('materi')" class="nav-btn px-3 py-2 rounded-lg hover:bg-burgundy-800/60 transition text-burgundy-100 flex items-center gap-2"><i class="fa-solid fa-book-open"></i> Materi</button>
+                <button onclick="switchTab('latihan')" class="nav-btn px-3 py-2 rounded-lg hover:bg-burgundy-800/60 transition text-burgundy-100 flex items-center gap-2"><i class="fa-solid fa-pen-to-square"></i> Latihan</button>
+                <button onclick="switchTab('hots')" class="nav-btn px-3 py-2 rounded-lg hover:bg-burgundy-800/60 transition text-burgundy-100 flex items-center gap-2"><i class="fa-solid fa-brain"></i> Kuis HOTS</button>
+                <button onclick="switchTab('game')" class="nav-btn px-3 py-2 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-burgundy-950 font-extrabold shadow-md transition flex items-center gap-2"><i class="fa-solid fa-[#f59e0b] fa-dice text-burgundy-950"></i> Ular Tangga</button>
+                <button onclick="switchTab('refleksi')" class="nav-btn px-3 py-2 rounded-lg hover:bg-burgundy-800/60 transition text-burgundy-100 flex items-center gap-2"><i class="fa-solid fa-heart"></i> Refleksi</button>
+                <button onclick="switchTab('profil')" class="nav-btn px-3 py-2 rounded-lg bg-burgundy-800 border border-burgundy-600 hover:bg-burgundy-700 transition text-amber-300 flex items-center gap-2"><i class="fa-solid fa-user-gear"></i> Profil</button>
+            </nav>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-burgundy-900 border-b border-burgundy-700 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('home')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-burgundy-800 text-burgundy-100"><i class="fa-solid fa-house w-6"></i> Beranda</button>
+            <button onclick="switchTab('cp-tp')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-burgundy-800 text-burgundy-100"><i class="fa-solid fa-bullseye w-6"></i> CP & TP</button>
+            <button onclick="switchTab('materi')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-burgundy-800 text-burgundy-100"><i class="fa-solid fa-book-open w-6"></i> Materi Interaktif</button>
+            <button onclick="switchTab('latihan')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-burgundy-800 text-burgundy-100"><i class="fa-solid fa-pen-to-square w-6"></i> Latihan Soal</button>
+            <button onclick="switchTab('hots')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-burgundy-800 text-burgundy-100"><i class="fa-solid fa-brain w-6"></i> Kuis HOTS</button>
+            <button onclick="switchTab('game')" class="w-full text-left px-3 py-2 rounded-lg bg-amber-500 font-bold text-burgundy-950"><i class="fa-solid fa-dice w-6"></i> Game Ular Tangga Pecahan</button>
+            <button onclick="switchTab('refleksi')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-burgundy-800 text-burgundy-100"><i class="fa-solid fa-heart w-6"></i> Refleksi</button>
+            <button onclick="switchTab('profil')" class="w-full text-left px-3 py-2 rounded-lg bg-burgundy-800 text-amber-300"><i class="fa-solid fa-user-gear w-6"></i> Profil Pengembang</button>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- ==================== HOME SECTION ==================== -->
+        <section id="sec-home" class="tab-content transition-all duration-300">
+            <div class="glass-card rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden my-4 border border-burgundy-300/30">
+                <div class="absolute -right-20 -top-20 w-80 h-80 bg-burgundy-300/30 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                    <div class="lg:col-span-7 space-y-6">
+                        <span class="px-4 py-1.5 rounded-full bg-burgundy-100 text-burgundy-900 font-bold text-xs tracking-wider uppercase inline-block border border-burgundy-200">
+                            ✨ Media Pembelajaran Digital Matematika Kelas 5 SD
+                        </span>
+                        <h1 class="text-3xl sm:text-5xl font-extrabold text-burgundy-950 leading-tight">
+                            Eksplorasi Dunia <span class="text-transparent bg-clip-text bg-gradient-to-r from-burgundy-700 to-rose-600">Pecahan</span> Jadi Mudah, Seru & Interaktif!
+                        </h1>
+                        <p class="text-slate-600 text-base sm:text-lg leading-relaxed">
+                            Pelajari konsep pecahan secara visual, simulasikan perbandingan & pengurutan pecahan secara langsung, uji pemahamanmu dengan tantangan HOTS, dan mainkan **Game Edukasi Ular Tangga Pecahan**!
+                        </p>
+                        
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                            <div class="bg-burgundy-50 p-3 rounded-xl border border-burgundy-200/60 text-center">
+                                <i class="fa-solid fa-pie-chart text-burgundy-700 text-2xl mb-1"></i>
+                                <p class="text-xs font-bold text-burgundy-900">Visual Simulator</p>
+                            </div>
+                            <div class="bg-burgundy-50 p-3 rounded-xl border border-burgundy-200/60 text-center">
+                                <i class="fa-solid fa-arrow-down-short-wide text-burgundy-700 text-2xl mb-1"></i>
+                                <p class="text-xs font-bold text-burgundy-900">Urutkan Pecahan</p>
+                            </div>
+                            <div class="bg-burgundy-50 p-3 rounded-xl border border-burgundy-200/60 text-center">
+                                <i class="fa-solid fa-fire text-burgundy-700 text-2xl mb-1"></i>
+                                <p class="text-xs font-bold text-burgundy-900">Soal & Kuis HOTS</p>
+                            </div>
+                            <div class="bg-burgundy-50 p-3 rounded-xl border border-burgundy-200/60 text-center">
+                                <i class="fa-solid fa-dice text-amber-600 text-2xl mb-1"></i>
+                                <p class="text-xs font-bold text-burgundy-900">Game Ular Tangga</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-4 pt-4">
+                            <button onclick="switchTab('materi')" class="pulse-btn px-6 py-3.5 bg-gradient-to-r from-burgundy-800 to-burgundy-600 hover:from-burgundy-900 hover:to-burgundy-700 text-white font-bold rounded-2xl shadow-xl transition flex items-center gap-3">
+                                <span>Mulai Belajar</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            <button onclick="switchTab('game')" class="px-6 py-3.5 bg-gradient-to-r from-amber-500 to-gold-600 hover:from-amber-600 hover:to-gold-700 text-burgundy-950 font-bold rounded-2xl shadow-lg transition flex items-center gap-2">
+                                <i class="fa-solid fa-dice text-xl"></i>
+                                <span>Main Ular Tangga</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 flex justify-center">
+                        <div class="relative w-full max-w-sm">
+                            <div class="absolute inset-0 bg-gradient-to-r from-burgundy-500 to-amber-500 rounded-3xl transform rotate-3 scale-105 opacity-30 blur-lg"></div>
+                            <div class="relative bg-white p-6 rounded-3xl shadow-2xl border border-burgundy-100 text-center">
+                                <div class="w-24 h-24 mx-auto mb-4 bg-burgundy-100 rounded-full flex items-center justify-center text-burgundy-800 text-4xl shadow-inner">
+                                    <i class="fa-solid fa-scale-balanced"></i>
+                                </div>
+                                <h3 class="font-extrabold text-xl text-burgundy-950 mb-1">Simulasi Perbandingan</h3>
+                                <p class="text-slate-500 text-sm mb-4">Gunakan simulator untuk membandingkan dan mengurutkan pecahan secara visual.</p>
+                                <div class="bg-burgundy-50 p-4 rounded-xl border border-burgundy-200 flex justify-center items-center gap-4 text-2xl font-black text-burgundy-900">
+                                    <span>2/4</span>
+                                    <span class="text-amber-600 font-extrabold text-3xl">=</span>
+                                    <span>1/2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CAPAIAN & TUJUAN PEMBELAJARAN ==================== -->
+        <section id="sec-cp-tp" class="tab-content hidden transition-all duration-300">
+            <div class="space-y-6">
+                <div class="bg-gradient-to-r from-burgundy-900 via-burgundy-800 to-burgundy-950 p-6 sm:p-8 rounded-3xl text-white shadow-xl border border-burgundy-700/50">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-300 mb-2 flex items-center gap-3">
+                        <i class="fa-solid fa-bullseye"></i> Capaian & Tujuan Pembelajaran
+                    </h2>
+                    <p class="text-burgundy-200 text-sm sm:text-base">Kurikulum Merdeka - Matematika Fase C (Kelas 5 SD)</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl border-l-8 border-burgundy-700">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-burgundy-100 text-burgundy-800 flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-xl text-burgundy-950">Capaian Pembelajaran (CP)</h3>
+                                <p class="text-xs text-slate-500">Elemen: Bilangan Pecahan</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-700 leading-relaxed text-sm sm:text-base bg-burgundy-50/60 p-4 rounded-2xl border border-burgundy-100">
+                            "Pada akhir Fase C, peserta didik dapat membandingkan dan mengurutkan berbagai pecahan termasuk pecahan senilai dan penyebut berbeda, melakukan operasi penjumlahan dan pengurangan pecahan, serta memecahkan masalah kontekstual matematika dalam kehidupan sehari-hari."
+                        </p>
+                    </div>
+
+                    <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl border-l-8 border-gold-500">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-gold-600 flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-list-check"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-xl text-burgundy-950">Tujuan Pembelajaran (TP)</h3>
+                                <p class="text-xs text-slate-500">Target Pencapaian Siswa</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 text-slate-700 text-sm sm:text-base">
+                            <li class="flex items-start gap-3 bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                                <span class="w-6 h-6 rounded-full bg-burgundy-800 text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</span>
+                                <span>Menjelaskan dan mendemonstrasikan pecahan senilai dengan visualisasi grafik interaktif.</span>
+                            </li>
+                            <li class="flex items-start gap-3 bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                                <span class="w-6 h-6 rounded-full bg-burgundy-800 text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</span>
+                                <span>Membandingkan dua pecahan menggunakan simbol (&lt;, &gt;, =) secara langsung melalui alat interaktif.</span>
+                            </li>
+                            <li class="flex items-start gap-3 bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                                <span class="w-6 h-6 rounded-full bg-burgundy-800 text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</span>
+                                <span>Mengurutkan 3 sampai 4 pecahan dari terkecil ke terbesar (atau sebaliknya) secara sistematis.</span>
+                            </li>
+                            <li class="flex items-start gap-3 bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                                <span class="w-6 h-6 rounded-full bg-burgundy-800 text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">4</span>
+                                <span>Menyelesaikan penjumlahan & pengurangan pecahan beda penyebut dan bermain Game Ular Tangga Edukatif.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MATERI INTERAKTIF ==================== -->
+        <section id="sec-materi" class="tab-content hidden transition-all duration-300">
+            <div class="space-y-6">
+                <!-- Navigation Tabs Materi -->
+                <div class="flex flex-wrap gap-2 bg-burgundy-950/80 p-2 rounded-2xl border border-burgundy-700/50">
+                    <button onclick="switchMateriSub('materi-1')" id="btn-mat-1" class="materi-tab-btn px-4 py-2.5 rounded-xl font-bold text-sm bg-burgundy-700 text-white shadow">
+                        1. Visual Pecahan Senilai
+                    </button>
+                    <button onclick="switchMateriSub('materi-2')" id="btn-mat-2" class="materi-tab-btn px-4 py-2.5 rounded-xl font-bold text-sm text-burgundy-200 hover:bg-burgundy-800/50">
+                        2. Membandingkan Pecahan (&lt;, &gt;, =)
+                    </button>
+                    <button onclick="switchMateriSub('materi-4')" id="btn-mat-4" class="materi-tab-btn px-4 py-2.5 rounded-xl font-bold text-sm text-burgundy-200 hover:bg-burgundy-800/50">
+                        3. Mengurutkan Pecahan (Interactive)
+                    </button>
+                    <button onclick="switchMateriSub('materi-3')" id="btn-mat-3" class="materi-tab-btn px-4 py-2.5 rounded-xl font-bold text-sm text-burgundy-200 hover:bg-burgundy-800/50">
+                        4. Penjumlahan & Pengurangan
+                    </button>
+                </div>
+
+                <!-- Sub Materi 1: Simulator Visual Pecahan -->
+                <div id="materi-1" class="materi-sub-content glass-card rounded-3xl p-6 sm:p-8 shadow-xl">
+                    <div class="max-w-3xl mb-6">
+                        <span class="text-burgundy-700 font-extrabold text-xs tracking-wider uppercase">Laboratorium Visual Pecahan</span>
+                        <h3 class="text-2xl font-black text-burgundy-950">Demonstrasi Interactive Fraction Visualizer</h3>
+                        <p class="text-slate-600 text-sm mt-1">Ubah nilai pembilang dan penyebut untuk melihat grafik lingkaran pecahan secara langsung!</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-burgundy-50/80 p-6 rounded-2xl border border-burgundy-200">
+                        <div class="lg:col-span-5 space-y-6">
+                            <div class="space-y-4 bg-white p-4 rounded-2xl border border-burgundy-100 shadow-sm">
+                                <div>
+                                    <label class="block font-bold text-slate-700 text-sm mb-1">Pembilang (Atas):</label>
+                                    <div class="flex items-center gap-2">
+                                        <button onclick="changeNumBy(-1)" class="w-10 h-10 rounded-xl bg-burgundy-100 hover:bg-burgundy-200 text-burgundy-900 font-bold text-lg flex items-center justify-center shadow-sm">-</button>
+                                        <input type="number" id="manual-num" min="1" max="24" value="1" oninput="handleManualInput()" class="w-full p-2.5 text-center font-black text-xl text-burgundy-900 bg-burgundy-50 border-2 border-burgundy-300 rounded-xl focus:ring-2 focus:ring-burgundy-600 focus:outline-none">
+                                        <button onclick="changeNumBy(1)" class="w-10 h-10 rounded-xl bg-burgundy-100 hover:bg-burgundy-200 text-burgundy-900 font-bold text-lg flex items-center justify-center shadow-sm">+</button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block font-bold text-slate-700 text-sm mb-1">Penyebut (Bawah):</label>
+                                    <div class="flex items-center gap-2">
+                                        <button onclick="changeDenBy(-1)" class="w-10 h-10 rounded-xl bg-burgundy-100 hover:bg-burgundy-200 text-burgundy-900 font-bold text-lg flex items-center justify-center shadow-sm">-</button>
+                                        <input type="number" id="manual-den" min="1" max="24" value="4" oninput="handleManualInput()" class="w-full p-2.5 text-center font-black text-xl text-burgundy-900 bg-burgundy-50 border-2 border-burgundy-300 rounded-xl focus:ring-2 focus:ring-burgundy-600 focus:outline-none">
+                                        <button onclick="changeDenBy(1)" class="w-10 h-10 rounded-xl bg-burgundy-100 hover:bg-burgundy-200 text-burgundy-900 font-bold text-lg flex items-center justify-center shadow-sm">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Canvas Display -->
+                        <div class="lg:col-span-7 flex flex-col items-center justify-center bg-white p-6 rounded-2xl shadow-sm border border-burgundy-100">
+                            <canvas id="canvas-materi-1" width="260" height="260" class="max-w-full h-auto"></canvas>
+                            <div class="mt-4 text-center">
+                                <p class="text-xs font-bold text-slate-500 uppercase">Nilai Pecahan:</p>
+                                <div class="text-3xl font-black text-burgundy-900 my-1" id="materi1-fraction-text">1 / 4</div>
+                                <div id="materi1-mixed-text" class="text-sm font-bold text-emerald-700 hidden">
+                                    Pecahan Campuran: <span id="mixed-val">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub Materi 2: Membandingkan Pecahan (DIPERBAIKI DENGAN SIMULASI SISWA) -->
+                <div id="materi-2" class="materi-sub-content glass-card rounded-3xl p-6 sm:p-8 shadow-xl hidden">
+                    <div class="max-w-3xl mb-6">
+                        <span class="text-burgundy-700 font-extrabold text-xs tracking-wider uppercase">Simulasi Interaktif Membandingkan</span>
+                        <h3 class="text-2xl font-black text-burgundy-950">Membandingkan Dua Pecahan</h3>
+                        <p class="text-slate-600 text-sm mt-1">Siswa dapat mengatur pecahan A dan pecahan B, lalu memilih tanda perbandingan yang tepat (**&lt;**, **&gt;**, atau **=**) untuk membuktikannya!</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-burgundy-50/60 p-6 rounded-2xl border border-burgundy-200 items-center">
+                        <!-- Fraction A -->
+                        <div class="lg:col-span-5 bg-white p-5 rounded-2xl border border-burgundy-100 shadow-sm flex flex-col items-center space-y-3">
+                            <h4 class="font-extrabold text-burgundy-900 text-lg">Pecahan A</h4>
+                            <div class="flex items-center gap-3">
+                                <div class="text-center">
+                                    <label class="block text-xs text-slate-500 font-bold mb-1">Pembilang</label>
+                                    <input type="number" id="comp-num1" min="1" max="12" value="1" onchange="updateCompareSim()" class="w-16 p-2 text-center font-black text-xl bg-burgundy-50 border-2 border-burgundy-300 rounded-xl focus:outline-none focus:border-burgundy-600">
+                                </div>
+                                <span class="text-3xl font-black text-slate-400 mt-4">/</span>
+                                <div class="text-center">
+                                    <label class="block text-xs text-slate-500 font-bold mb-1">Penyebut</label>
+                                    <input type="number" id="comp-den1" min="1" max="12" value="2" onchange="updateCompareSim()" class="w-16 p-2 text-center font-black text-xl bg-burgundy-50 border-2 border-burgundy-300 rounded-xl focus:outline-none focus:border-burgundy-600">
+                                </div>
+                            </div>
+                            <canvas id="canvas-comp-1" width="160" height="160"></canvas>
+                        </div>
+
+                        <!-- Sign Selector Center -->
+                        <div class="lg:col-span-2 flex flex-col items-center justify-center space-y-3 my-2">
+                            <span class="text-xs font-bold text-slate-500 uppercase">Pilih Tanda:</span>
+                            <div class="flex lg:flex-col gap-2">
+                                <button onclick="selectCompSign('<')" id="btn-sign-less" class="w-12 h-12 rounded-2xl font-black text-2xl border-2 transition flex items-center justify-center bg-white border-burgundy-300 text-burgundy-900 hover:bg-burgundy-100">&lt;</button>
+                                <button onclick="selectCompSign('=')" id="btn-sign-equal" class="w-12 h-12 rounded-2xl font-black text-2xl border-2 transition flex items-center justify-center bg-white border-burgundy-300 text-burgundy-900 hover:bg-burgundy-100">=</button>
+                                <button onclick="selectCompSign('>')" id="btn-sign-greater" class="w-12 h-12 rounded-2xl font-black text-2xl border-2 transition flex items-center justify-center bg-white border-burgundy-300 text-burgundy-900 hover:bg-burgundy-100">&gt;</button>
+                            </div>
+                            <button onclick="checkCompareUserChoice()" class="px-4 py-2 bg-burgundy-800 text-white font-bold rounded-xl text-xs hover:bg-burgundy-900 transition shadow">
+                                Cek Jawaban
+                            </button>
+                        </div>
+
+                        <!-- Fraction B -->
+                        <div class="lg:col-span-5 bg-white p-5 rounded-2xl border border-burgundy-100 shadow-sm flex flex-col items-center space-y-3">
+                            <h4 class="font-extrabold text-burgundy-900 text-lg">Pecahan B</h4>
+                            <div class="flex items-center gap-3">
+                                <div class="text-center">
+                                    <label class="block text-xs text-slate-500 font-bold mb-1">Pembilang</label>
+                                    <input type="number" id="comp-num2" min="1" max="12" value="3" onchange="updateCompareSim()" class="w-16 p-2 text-center font-black text-xl bg-burgundy-50 border-2 border-burgundy-300 rounded-xl focus:outline-none focus:border-burgundy-600">
+                                </div>
+                                <span class="text-3xl font-black text-slate-400 mt-4">/</span>
+                                <div class="text-center">
+                                    <label class="block text-xs text-slate-500 font-bold mb-1">Penyebut</label>
+                                    <input type="number" id="comp-den2" min="1" max="12" value="4" onchange="updateCompareSim()" class="w-16 p-2 text-center font-black text-xl bg-burgundy-50 border-2 border-burgundy-300 rounded-xl focus:outline-none focus:border-burgundy-600">
+                                </div>
+                            </div>
+                            <canvas id="canvas-comp-2" width="160" height="160"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Feedback Banner -->
+                    <div id="compare-feedback-box" class="mt-6 bg-gradient-to-r from-burgundy-900 to-burgundy-800 text-white p-6 rounded-2xl text-center shadow-lg transition-all">
+                        <p class="text-xs uppercase tracking-wider text-burgundy-200 font-bold mb-1">Hasil Perhitungan Simulasi</p>
+                        <div id="compare-result-text" class="text-2xl sm:text-3xl font-black text-amber-300">
+                            1/2 &lt; 3/4
+                        </div>
+                        <p id="compare-explain" class="text-sm text-burgundy-100 mt-2">
+                            Pecahan 1/2 nilainya (0.50) lebih kecil dibanding 3/4 (0.75).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Sub Materi 4: BARU! MENGURUTKAN PECAHAN -->
+                <div id="materi-4" class="materi-sub-content glass-card rounded-3xl p-6 sm:p-8 shadow-xl hidden">
+                    <div class="max-w-3xl mb-6">
+                        <span class="text-burgundy-700 font-extrabold text-xs tracking-wider uppercase">Materi Baru & Simulasi</span>
+                        <h3 class="text-2xl font-black text-burgundy-950">Mengurutkan Berbagai Pecahan</h3>
+                        <p class="text-slate-600 text-sm mt-1">Siswa dapat menginput 3 atau 4 pecahan sekaligus, menyamakan penyebutnya (KPK), dan melihat urutan secara visual dari terkecil hingga terbesar!</p>
+                    </div>
+
+                    <div class="bg-burgundy-50/70 p-6 rounded-2xl border border-burgundy-200 space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="order-inputs-container">
+                            <!-- Input 1 -->
+                            <div class="bg-white p-4 rounded-2xl border border-burgundy-100 shadow-sm text-center">
+                                <span class="text-xs font-bold text-burgundy-800 uppercase block mb-2">Pecahan 1</span>
+                                <div class="flex items-center justify-center gap-1">
+                                    <input type="number" id="ord-n1" value="1" min="1" max="12" class="w-14 p-2 text-center font-bold text-lg bg-burgundy-50 border border-burgundy-300 rounded-lg" onchange="simulasiUrutanPecahan()">
+                                    <span class="font-bold text-slate-400">/</span>
+                                    <input type="number" id="ord-d1" value="2" min="1" max="12" class="w-14 p-2 text-center font-bold text-lg bg-burgundy-50 border border-burgundy-300 rounded-lg" onchange="simulasiUrutanPecahan()">
+                                </div>
+                            </div>
+
+                            <!-- Input 2 -->
+                            <div class="bg-white p-4 rounded-2xl border border-burgundy-100 shadow-sm text-center">
+                                <span class="text-xs font-bold text-burgundy-800 uppercase block mb-2">Pecahan 2</span>
+                                <div class="flex items-center justify-center gap-1">
+                                    <input type="number" id="ord-n2" value="3" min="1" max="12" class="w-14 p-2 text-center font-bold text-lg bg-burgundy-50 border border-burgundy-300 rounded-lg" onchange="simulasiUrutanPecahan()">
+                                    <span class="font-bold text-slate-400">/</span>
+                                    <input type="number" id="ord-d2" value="4" min="1" max="12" class="w-14 p-2 text-center font-bold text-lg bg-burgundy-50 border border-burgundy-300 rounded-lg" onchange="simulasiUrutanPecahan()">
+                                </div>
+                            </div>
+
+                            <!-- Input 3 -->
+                            <div class="bg-white p-4 rounded-2xl border border-burgundy-100 shadow-sm text-center">
+                                <span class="text-xs font-bold text-burgundy-800 uppercase block mb-2">Pecahan 3</span>
+                                <div class="flex items-center justify-center gap-1">
+                                    <input type="number" id="ord-n3" value="1" min="1" max="12" class="w-14 p-2 text-center font-bold text-lg bg-burgundy-50 border border-burgundy-300 rounded-lg" onchange="simulasiUrutanPecahan()">
+                                    <span class="font-bold text-slate-400">/</span>
+                                    <input type="number" id="ord-d3" value="3" min="1" max="12" class="w-14 p-2 text-center font-bold text-lg bg-burgundy-50 border border-burgundy-300 rounded-lg" onchange="simulasiUrutanPecahan()">
+                                </div>
+                            </div>
+
+                            <!-- Input 4 -->
+                            <div class="bg-white p-4 rounded-2xl border border-burgundy-100 shadow-sm text-center">
+                                <span class="text-xs font-bold text-burgundy-800 uppercase block mb-2">Pecahan 4</span>
+                                <div class="flex items-center justify-center gap-1">
+                                    <input type="number" id="ord-n4" value="2" min="1" max="12" class="w-14 p-2 text-center font-bold text-lg bg-burgundy-50 border border-burgundy-300 rounded-lg" onchange="simulasiUrutanPecahan()">
+                                    <span class="font-bold text-slate-400">/</span>
+                                    <input type="number" id="ord-d4" value="5" min="1" max="12" class="w-14 p-2 text-center font-bold text-lg bg-burgundy-50 border border-burgundy-300 rounded-lg" onchange="simulasiUrutanPecahan()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visualization Bar Container -->
+                        <div class="bg-white p-6 rounded-2xl border border-burgundy-200 shadow-sm space-y-4">
+                            <h4 class="font-bold text-burgundy-950 text-sm uppercase tracking-wide flex items-center gap-2">
+                                <i class="fa-solid fa-chart-bar text-amber-500"></i> Visualisasi Nilai Pecahan (Bar Graph):
+                            </h4>
+                            <div id="order-bar-container" class="space-y-3">
+                                <!-- Dynamic bars inserted by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Result & Steps -->
+                        <div class="bg-gradient-to-r from-burgundy-900 via-burgundy-800 to-burgundy-950 text-white p-6 rounded-2xl shadow-md space-y-3">
+                            <div class="flex flex-wrap justify-between items-center gap-2">
+                                <span class="text-xs uppercase text-amber-300 font-bold tracking-wider">Hasil Pengurutan (Terkecil ➔ Terbesar)</span>
+                                <button onclick="simulasiUrutanPecahan()" class="px-3 py-1 bg-amber-500 hover:bg-amber-600 text-burgundy-950 font-bold text-xs rounded-lg transition">
+                                    <i class="fa-solid fa-rotate-right mr-1"></i> Hitung Ulang
+                                </button>
+                            </div>
+                            <div id="order-result-text" class="text-2xl sm:text-3xl font-black text-amber-300">
+                                2/5 &lt; 1/3 &lt; 1/2 &lt; 3/4
+                            </div>
+                            <div id="order-steps" class="text-xs text-burgundy-100 space-y-1 font-mono bg-burgundy-950/60 p-3 rounded-xl border border-burgundy-700">
+                                <!-- Dynamic steps -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub Materi 3: Penjumlahan & Pengurangan -->
+                <div id="materi-3" class="materi-sub-content glass-card rounded-3xl p-6 sm:p-8 shadow-xl hidden">
+                    <div class="max-w-3xl mb-6">
+                        <span class="text-burgundy-700 font-extrabold text-xs tracking-wider uppercase">Operasi Hitung Pecahan</span>
+                        <h3 class="text-2xl font-black text-burgundy-950">Penjumlahan & Pengurangan Beda Penyebut</h3>
+                        <p class="text-slate-600 text-sm mt-1">Ubah penyebut agar sama (mencari KPK) sebelum melakukan penjumlahan atau pengurangan!</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-burgundy-200 shadow-sm space-y-6">
+                        <div class="flex flex-wrap items-center justify-center gap-4 text-center">
+                            <div class="bg-burgundy-50 p-4 rounded-xl border border-burgundy-200">
+                                <div class="flex items-center gap-2">
+                                    <input type="number" id="op-n1" value="1" min="1" max="10" class="w-14 p-1 text-center font-bold text-lg rounded border border-burgundy-300" onchange="calcOperation()">
+                                    <span>/</span>
+                                    <input type="number" id="op-d1" value="3" min="1" max="10" class="w-14 p-1 text-center font-bold text-lg rounded border border-burgundy-300" onchange="calcOperation()">
+                                </div>
+                            </div>
+
+                            <select id="op-type" onchange="calcOperation()" class="p-3 font-black text-xl text-burgundy-900 bg-amber-100 border border-amber-300 rounded-xl cursor-pointer">
+                                <option value="+">+</option>
+                                <option value="-">-</option>
+                            </select>
+
+                            <div class="bg-burgundy-50 p-4 rounded-xl border border-burgundy-200">
+                                <div class="flex items-center gap-2">
+                                    <input type="number" id="op-n2" value="1" min="1" max="10" class="w-14 p-1 text-center font-bold text-lg rounded border border-burgundy-300" onchange="calcOperation()">
+                                    <span>/</span>
+                                    <input type="number" id="op-d2" value="4" min="1" max="10" class="w-14 p-1 text-center font-bold text-lg rounded border border-burgundy-300" onchange="calcOperation()">
+                                </div>
+                            </div>
+
+                            <span class="text-2xl font-black text-slate-600">=</span>
+
+                            <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-300 text-emerald-900 font-black text-xl">
+                                <span id="op-result">7 / 12</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                            <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wide flex items-center gap-2">
+                                <i class="fa-solid fa-list-ol text-burgundy-700"></i> Langkah Penyelesaian:
+                            </h4>
+                            <div id="op-steps" class="space-y-2 text-sm text-slate-700 font-mono">
+                                <!-- Dynamic Steps -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== LATIHAN SOAL (10 SOAL) ==================== -->
+        <section id="sec-latihan" class="tab-content hidden transition-all duration-300">
+            <div class="space-y-6">
+                <div class="bg-gradient-to-r from-burgundy-900 via-burgundy-800 to-burgundy-950 p-6 sm:p-8 rounded-3xl text-white shadow-xl flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-300 flex items-center gap-3">
+                            <i class="fa-solid fa-pen-to-square"></i> Latihan Soal Interaktif
+                        </h2>
+                        <p class="text-burgundy-200 text-sm mt-1">Uji pemahaman dasar pecahan dengan 10 soal variatif.</p>
+                    </div>
+                    <div class="bg-burgundy-950 px-5 py-3 rounded-2xl border border-burgundy-700 text-center">
+                        <span class="text-xs text-burgundy-300 block font-bold">Skor Latihan</span>
+                        <span id="latihan-score-display" class="text-2xl font-black text-amber-400">0 / 100</span>
+                    </div>
+                </div>
+
+                <div id="latihan-container" class="space-y-6">
+                    <!-- Dynamic Practice Cards -->
+                </div>
+
+                <div class="text-center pt-4">
+                    <button onclick="resetLatihan()" class="px-6 py-3 bg-burgundy-800 hover:bg-burgundy-900 text-white font-bold rounded-xl shadow-lg transition">
+                        <i class="fa-solid fa-rotate-right mr-2"></i> Ulangi Latihan Soal
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== KUIS HOTS (5 SOAL STORY) ==================== -->
+        <section id="sec-hots" class="tab-content hidden transition-all duration-300">
+            <div class="space-y-6">
+                <div class="bg-gradient-to-r from-amber-600 via-burgundy-800 to-burgundy-950 p-6 sm:p-8 rounded-3xl text-white shadow-xl flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-300 flex items-center gap-3">
+                            <i class="fa-solid fa-brain"></i> Kuis HOTS (Higher Order Thinking)
+                        </h2>
+                        <p class="text-amber-100 text-sm mt-1">Soal cerita penalaran kontekstual pecahan tingkat tinggi.</p>
+                    </div>
+                    <div class="bg-burgundy-950 px-5 py-3 rounded-2xl border border-burgundy-700 text-center">
+                        <span class="text-xs text-burgundy-300 block font-bold">Skor HOTS</span>
+                        <span id="hots-score-display" class="text-2xl font-black text-amber-400">0 / 100</span>
+                    </div>
+                </div>
+
+                <div id="hots-container" class="space-y-6">
+                    <!-- Dynamic HOTS Cards -->
+                </div>
+
+                <div class="text-center pt-4">
+                    <button onclick="resetHots()" class="px-6 py-3 bg-burgundy-800 hover:bg-burgundy-900 text-white font-bold rounded-xl shadow-lg transition">
+                        <i class="fa-solid fa-rotate-right mr-2"></i> Ulangi Kuis HOTS
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== GAME ULAR TANGGA PECAHAN ==================== -->
+        <section id="sec-game" class="tab-content hidden transition-all duration-300">
+            <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-2xl border border-burgundy-200 space-y-6">
+                <!-- Header Status Game -->
+                <div class="flex flex-wrap justify-between items-center pb-4 border-b border-slate-200 gap-4">
+                    <div>
+                        <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold uppercase tracking-wider border border-amber-300">
+                            🎲 Mini Game Edukasi Interaktif
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-black text-burgundy-950 flex items-center gap-2 mt-1">
+                            <i class="fa-solid fa-dice text-amber-500"></i> Ular Tangga Pecahan
+                        </h2>
+                        <p class="text-slate-600 text-sm">Kocok dadu, jawab soal pecahan variatif (pecahan senilai, membandingkan, mengurutkan, penjumlahan & pengurangan), dan capai petak 30!</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="bg-burgundy-50 px-4 py-2 rounded-2xl border border-burgundy-200 text-center">
+                            <span class="text-xs text-slate-500 font-bold block">Posisi Pemain</span>
+                            <span id="snake-player-pos" class="text-2xl font-black text-burgundy-900">Petak 1</span>
+                        </div>
+                        <button onclick="resetSnakeGame()" class="px-4 py-3 bg-burgundy-800 hover:bg-burgundy-900 text-white font-bold rounded-2xl shadow transition text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-rotate-right"></i> Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Game Arena -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    <!-- Board Grid (30 Tiles) -->
+                    <div class="lg:col-span-8 bg-gradient-to-br from-amber-900 via-burgundy-950 to-burgundy-900 p-4 sm:p-6 rounded-3xl shadow-2xl border-4 border-amber-600/40">
+                        <div id="snakes-board" class="board-grid">
+                            <!-- 30 Dynamic Tiles Generated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Dice & Action Controller Panel -->
+                    <div class="lg:col-span-4 space-y-4">
+                        <div class="bg-white p-6 rounded-3xl shadow-xl border border-burgundy-100 text-center space-y-4">
+                            <h3 class="font-extrabold text-burgundy-950 text-lg">Kocok Dadu Kamu!</h3>
+                            
+                            <div class="w-24 h-24 mx-auto bg-gradient-to-br from-amber-400 to-amber-600 text-burgundy-950 rounded-2xl flex items-center justify-center text-5xl font-black shadow-xl border-4 border-amber-200 transition-transform transform active:scale-95" id="dice-display">
+                                🎲
+                            </div>
+
+                            <button id="roll-dice-btn" onclick="rollSnakeDice()" class="w-full py-3.5 bg-gradient-to-r from-amber-500 to-gold-600 hover:from-amber-600 hover:to-gold-700 text-burgundy-950 font-black text-base rounded-2xl shadow-lg transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-dice text-xl"></i>
+                                <span>Lempar Dadu</span>
+                            </button>
+
+                            <div id="snake-game-log" class="text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-200 min-h-[60px] flex items-center justify-center font-medium">
+                                Klik 'Lempar Dadu' untuk memulai petualangan Ular Tangga!
+                            </div>
+                        </div>
+
+                        <!-- Legend Details -->
+                        <div class="bg-burgundy-50 p-4 rounded-2xl border border-burgundy-200 space-y-2 text-xs font-bold text-burgundy-950">
+                            <div class="flex items-center gap-2">
+                                <span class="w-4 h-4 rounded bg-amber-400 inline-block"></span>
+                                <span><strong>Tangga (Naik):</strong> Petak 3➔11, 14➔22, 19➔27</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-4 h-4 rounded bg-rose-500 inline-block"></span>
+                                <span><strong>Ular (Turun):</strong> Petak 17➔7, 24➔12, 29➔15</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Question Dialog for Snake Game -->
+            <div id="snake-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+                <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border-4 border-amber-400 space-y-5 transform animate-scaleUp">
+                    <div class="flex justify-between items-center border-b pb-3">
+                        <span class="px-3 py-1 bg-amber-100 text-amber-900 rounded-full font-black text-xs uppercase" id="snake-modal-category">Pecahan Senilai</span>
+                        <span class="text-xs font-bold text-slate-400">Jawab Benar untuk Maju!</span>
+                    </div>
+
+                    <p id="snake-modal-question" class="text-base sm:text-lg font-extrabold text-burgundy-950">
+                        Soal tantangan ular tangga...
+                    </p>
+
+                    <div id="snake-modal-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <!-- Dynamic Buttons -->
+                    </div>
+
+                    <div id="snake-modal-feedback" class="hidden p-3 rounded-xl text-center font-bold text-sm">
+                        <!-- Feedback text -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== REFLEKSI PEMBELAJARAN ==================== -->
+        <section id="sec-refleksi" class="tab-content hidden transition-all duration-300">
+            <div class="glass-card rounded-3xl p-6 sm:p-10 shadow-xl border border-burgundy-200 space-y-6">
+                <div class="border-b border-burgundy-100 pb-4">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-burgundy-950 flex items-center gap-3">
+                        <i class="fa-solid fa-heart text-rose-600"></i> Refleksi Pembelajaran Siswa
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Ungkapkan apa yang sudah kamu pelajari dan perasaanmu hari ini!</p>
+                </div>
+
+                <form id="refleksi-form" onsubmit="handleRefleksiSubmit(event)" class="space-y-6">
+                    <div>
+                        <label class="block font-bold text-burgundy-950 text-sm mb-2">1. Bagaimana perasaanmu setelah belajar pecahan hari ini?</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="feeling" value="Sangat Senang" class="peer hidden" required>
+                                <div class="p-4 rounded-2xl bg-burgundy-50 border-2 border-burgundy-200 peer-checked:border-burgundy-700 peer-checked:bg-burgundy-100 text-center transition">
+                                    <span class="text-3xl block mb-1">😍</span>
+                                    <span class="text-xs font-bold text-burgundy-950">Sangat Senang</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="feeling" value="Paham" class="peer hidden">
+                                <div class="p-4 rounded-2xl bg-burgundy-50 border-2 border-burgundy-200 peer-checked:border-burgundy-700 peer-checked:bg-burgundy-100 text-center transition">
+                                    <span class="text-3xl block mb-1">😃</span>
+                                    <span class="text-xs font-bold text-burgundy-950">Paham & Seru</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="feeling" value="Biasa Saja" class="peer hidden">
+                                <div class="p-4 rounded-2xl bg-burgundy-50 border-2 border-burgundy-200 peer-checked:border-burgundy-700 peer-checked:bg-burgundy-100 text-center transition">
+                                    <span class="text-3xl block mb-1">😐</span>
+                                    <span class="text-xs font-bold text-burgundy-950">Biasa Saja</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="feeling" value="Masih Bingung" class="peer hidden">
+                                <div class="p-4 rounded-2xl bg-burgundy-50 border-2 border-burgundy-200 peer-checked:border-burgundy-700 peer-checked:bg-burgundy-100 text-center transition">
+                                    <span class="text-3xl block mb-1">🤔</span>
+                                    <span class="text-xs font-bold text-burgundy-950">Masih Bingung</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-burgundy-950 text-sm mb-2">2. Bagian materi mana yang paling kamu sukai?</label>
+                        <select name="favorite" class="w-full p-3 bg-burgundy-50 border-2 border-burgundy-200 rounded-xl font-medium text-slate-700 focus:outline-none focus:border-burgundy-600">
+                            <option value="Visual Simulator Pecahan">Visual Simulator Pecahan</option>
+                            <option value="Membandingkan Dua Pecahan">Membandingkan Dua Pecahan (&lt;, &gt;, =)</option>
+                            <option value="Mengurutkan Pecahan">Simulasi Mengurutkan Pecahan</option>
+                            <option value="Penjumlahan & Pengurangan">Penjumlahan & Pengurangan Beda Penyebut</option>
+                            <option value="Game Ular Tangga">Game Ular Tangga Pecahan</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-burgundy-950 text-sm mb-2">3. Tuliskan kesan atau hal baru yang kamu pelajari:</label>
+                        <textarea name="notes" rows="3" placeholder="Contoh: Saya sekarang mengerti cara mengurutkan pecahan dengan menyamakan penyebutnya!" class="w-full p-3 bg-burgundy-50 border-2 border-burgundy-200 rounded-xl font-medium text-slate-700 focus:outline-none focus:border-burgundy-600"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 bg-burgundy-800 hover:bg-burgundy-900 text-white font-bold rounded-xl shadow-lg transition">
+                        Kirim Refleksi Saya
+                    </button>
+                </form>
+
+                <div id="refleksi-feedback" class="hidden p-4 bg-emerald-100 border border-emerald-300 text-emerald-900 rounded-2xl text-center font-bold">
+                    🎉 Terima kasih sudah mengisi refleksi! Pertahankan semangat belajarmu!
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PROFIL PENGEMBANG ==================== -->
+        <section id="sec-profil" class="tab-content hidden transition-all duration-300">
+            <div class="glass-card rounded-3xl p-6 sm:p-10 shadow-2xl border border-burgundy-200 max-w-3xl mx-auto">
+                <div class="text-center space-y-4">
+                    <div class="relative inline-block">
+                        <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-tr from-burgundy-800 via-rose-600 to-amber-400 p-1 shadow-xl">
+                            <div class="w-full h-full bg-burgundy-950 rounded-full flex items-center justify-center text-amber-300 text-5xl font-black">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+                        </div>
+                        <span class="absolute bottom-0 right-2 bg-emerald-500 border-2 border-white w-6 h-6 rounded-full"></span>
+                    </div>
+
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-black text-burgundy-950">Pengembang Media Pembelajaran</h2>
+                        <p class="text-burgundy-700 font-bold text-sm mt-0.5">Inovasi Digital Pendidikan Matematika SD</p>
+                    </div>
+
+                    <div class="bg-burgundy-50 p-6 rounded-2xl border border-burgundy-200 text-left space-y-3 text-sm sm:text-base">
+                        <div class="flex items-center gap-3 border-b border-burgundy-200/60 pb-2">
+                            <i class="fa-solid fa-user text-burgundy-700 w-5"></i>
+                            <span class="font-bold text-slate-600">Nama Pengembang:</span>
+                            <span class="font-bold text-burgundy-950 ml-auto">Tim Pengembang Pembelajaran Interaktif</span>
+                        </div>
+                        <div class="flex items-center gap-3 border-b border-burgundy-200/60 pb-2">
+                            <i class="fa-solid fa-school text-burgundy-700 w-5"></i>
+                            <span class="font-bold text-slate-600">Sasaran Media:</span>
+                            <span class="font-bold text-burgundy-950 ml-auto">Kelas 5 SD (Fase C)</span>
+                        </div>
+                        <div class="flex items-center gap-3 border-b border-burgundy-200/60 pb-2">
+                            <i class="fa-solid fa-book-bookmark text-burgundy-700 w-5"></i>
+                            <span class="font-bold text-slate-600">Mata Pelajaran:</span>
+                            <span class="font-bold text-burgundy-950 ml-auto">Matematika - Pecahan</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-code text-burgundy-700 w-5"></i>
+                            <span class="font-bold text-slate-600">Teknologi:</span>
+                            <span class="font-bold text-burgundy-950 ml-auto">HTML5, Tailwind CSS, JS Canvas</span>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-500 italic">
+                        "Media ini dirancang untuk mempermudah pemahaman konseptual dan kontekstual siswa SD melalui pendekatan visual interaktif & gamifikasi Ular Tangga."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto bg-burgundy-950 text-burgundy-300 py-6 border-t border-burgundy-800 text-center text-xs">
+        <p>© 2026 Media Pembelajaran Interaktif Matematika Kelas 5 SD - Kurikulum Merdeka</p>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        // --- NAVIGATION LOGIC ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('sec-' + tabId);
+            if (target) target.classList.remove('hidden');
+
+            document.getElementById('mobile-menu').classList.add('hidden');
+
+            if (tabId === 'materi') {
+                renderMateri1Canvas();
+                updateCompareSim();
+                simulasiUrutanPecahan();
+                calcOperation();
+            } else if (tabId === 'game') {
+                initSnakeBoard();
+            }
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function switchMateriSub(subId) {
+            document.querySelectorAll('.materi-sub-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(subId).classList.remove('hidden');
+
+            document.querySelectorAll('.materi-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-burgundy-700', 'text-white', 'shadow');
+                btn.classList.add('text-burgundy-200', 'hover:bg-burgundy-800/50');
+            });
+
+            const activeBtnMap = {
+                'materi-1': 'btn-mat-1',
+                'materi-2': 'btn-mat-2',
+                'materi-4': 'btn-mat-4',
+                'materi-3': 'btn-mat-3'
+            };
+            const activeBtn = document.getElementById(activeBtnMap[subId]);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-burgundy-700', 'text-white', 'shadow');
+                activeBtn.classList.remove('text-burgundy-200', 'hover:bg-burgundy-800/50');
+            }
+
+            if (subId === 'materi-1') renderMateri1Canvas();
+            if (subId === 'materi-2') updateCompareSim();
+            if (subId === 'materi-4') simulasiUrutanPecahan();
+            if (subId === 'materi-3') calcOperation();
+        }
+
+        // --- SUB MATERI 1: VISUALIZER LOGIC ---
+        let currentNum = 1;
+        let currentDen = 4;
+
+        function changeNumBy(val) {
+            currentNum = Math.max(1, Math.min(24, currentNum + val));
+            updateMateri1UI();
+        }
+
+        function changeDenBy(val) {
+            currentDen = Math.max(1, Math.min(24, currentDen + val));
+            updateMateri1UI();
+        }
+
+        function handleManualInput() {
+            const n = parseInt(document.getElementById('manual-num').value) || 1;
+            const d = parseInt(document.getElementById('manual-den').value) || 1;
+            currentNum = Math.max(1, Math.min(24, n));
+            currentDen = Math.max(1, Math.min(24, d));
+            updateMateri1UI();
+        }
+
+        function updateMateri1UI() {
+            document.getElementById('manual-num').value = currentNum;
+            document.getElementById('manual-den').value = currentDen;
+            document.getElementById('materi1-fraction-text').innerText = `${currentNum} / ${currentDen}`;
+
+            const mixedContainer = document.getElementById('materi1-mixed-text');
+            if (currentNum >= currentDen) {
+                const whole = Math.floor(currentNum / currentDen);
+                const rem = currentNum % currentDen;
+                mixedContainer.classList.remove('hidden');
+                document.getElementById('mixed-val').innerText = rem === 0 ? `${whole}` : `${whole} (${rem}/${currentDen})`;
+            } else {
+                mixedContainer.classList.add('hidden');
+            }
+
+            renderMateri1Canvas();
+        }
+
+        function renderMateri1Canvas() {
+            const canvas = document.getElementById('canvas-materi-1');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            const radius = 95;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const anglePerSlice = (2 * Math.PI) / currentDen;
+
+            for (let i = 0; i < currentDen; i++) {
+                const startAngle = i * anglePerSlice - Math.PI / 2;
+                const endAngle = startAngle + anglePerSlice;
+
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.arc(cx, cy, radius, startAngle, endAngle);
+                ctx.closePath();
+
+                ctx.fillStyle = (i < currentNum) ? '#bf2f53' : '#fbe6e9';
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#ffffff';
+                ctx.stroke();
+            }
+
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#851e3a';
+            ctx.stroke();
+        }
+
+        // --- SUB MATERI 2: COMPARE FRACTIONS LOGIC (DIPERBAIKI DENGAN PILIHAN TANDA) ---
+        let selectedUserSign = null;
+
+        function selectCompSign(sign) {
+            selectedUserSign = sign;
+            ['btn-sign-less', 'btn-sign-equal', 'btn-sign-greater'].forEach(id => {
+                const btn = document.getElementById(id);
+                btn.classList.remove('bg-burgundy-800', 'text-white', 'border-burgundy-900');
+                btn.classList.add('bg-white', 'text-burgundy-900', 'border-burgundy-300');
+            });
+
+            const targetMap = { '<': 'btn-sign-less', '=': 'btn-sign-equal', '>': 'btn-sign-greater' };
+            const activeBtn = document.getElementById(targetMap[sign]);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-burgundy-900', 'border-burgundy-300');
+                activeBtn.classList.add('bg-burgundy-800', 'text-white', 'border-burgundy-900');
+            }
+        }
+
+        function updateCompareSim() {
+            const n1 = parseInt(document.getElementById('comp-num1').value) || 1;
+            const d1 = parseInt(document.getElementById('comp-den1').value) || 1;
+            const n2 = parseInt(document.getElementById('comp-num2').value) || 1;
+            const d2 = parseInt(document.getElementById('comp-den2').value) || 1;
+
+            drawPieCircle('canvas-comp-1', n1, d1, '#d54d6f');
+            drawPieCircle('canvas-comp-2', n2, d2, '#f59e0b');
+
+            const val1 = n1 / d1;
+            const val2 = n2 / d2;
+            let correctSign = '=';
+            if (val1 > val2) correctSign = '>';
+            else if (val1 < val2) correctSign = '<';
+
+            document.getElementById('compare-result-text').innerText = `${n1}/${d1}  ${selectedUserSign || correctSign}  ${n2}/${d2}`;
+            document.getElementById('compare-explain').innerText = `Nilai ${n1}/${d1} (${val1.toFixed(2)}) disimulasikan dengan ${n2}/${d2} (${val2.toFixed(2)}).`;
+        }
+
+        function checkCompareUserChoice() {
+            const n1 = parseInt(document.getElementById('comp-num1').value) || 1;
+            const d1 = parseInt(document.getElementById('comp-den1').value) || 1;
+            const n2 = parseInt(document.getElementById('comp-num2').value) || 1;
+            const d2 = parseInt(document.getElementById('comp-den2').value) || 1;
+
+            if (!selectedUserSign) {
+                alert("Silakan pilih salah satu tanda (<, =, >) terlebih dahulu!");
+                return;
+            }
+
+            const val1 = n1 / d1;
+            const val2 = n2 / d2;
+            let correctSign = '=';
+            if (val1 > val2) correctSign = '>';
+            else if (val1 < val2) correctSign = '<';
+
+            const feedbackBox = document.getElementById('compare-feedback-box');
+            if (selectedUserSign === correctSign) {
+                feedbackBox.className = "mt-6 bg-gradient-to-r from-emerald-700 to-teal-800 text-white p-6 rounded-2xl text-center shadow-lg transition-all";
+                document.getElementById('compare-result-text').innerText = `🎉 TEPAT SEKALI! ${n1}/${d1} ${correctSign} ${n2}/${d2}`;
+                document.getElementById('compare-explain').innerText = `Jawabanmu benar! Nilai ${n1}/${d1} (${val1.toFixed(2)}) memang ${correctSign === '=' ? 'sama dengan' : (correctSign === '>' ? 'lebih besar dari' : 'lebih kecil dari')} ${n2}/${d2} (${val2.toFixed(2)}).`;
+            } else {
+                feedbackBox.className = "mt-6 bg-gradient-to-r from-rose-800 to-burgundy-900 text-white p-6 rounded-2xl text-center shadow-lg transition-all";
+                document.getElementById('compare-result-text').innerText = `❌ KURANG TEPAT: Seharusnya ${n1}/${d1} ${correctSign} ${n2}/${d2}`;
+                document.getElementById('compare-explain').innerText = `Perhatikan grafik lingkaran! Nilai ${n1}/${d1} (${val1.toFixed(2)}) sebenarnya ${correctSign === '=' ? 'sama dengan' : (correctSign === '>' ? 'lebih besar dari' : 'lebih kecil dari')} ${n2}/${d2} (${val2.toFixed(2)}).`;
+            }
+        }
+
+        function drawPieCircle(canvasId, num, den, color) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            const radius = 55;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const anglePerSlice = (2 * Math.PI) / den;
+
+            for (let i = 0; i < den; i++) {
+                const startAngle = i * anglePerSlice - Math.PI / 2;
+                const endAngle = startAngle + anglePerSlice;
+
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.arc(cx, cy, radius, startAngle, endAngle);
+                ctx.closePath();
+
+                ctx.fillStyle = (i < num) ? color : '#f1f5f9';
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#ffffff';
+                ctx.stroke();
+            }
+        }
+
+        // --- SUB MATERI 4: MENGURUTKAN PECAHAN LOGIC ---
+        function simulasiUrutanPecahan() {
+            const list = [
+                { id: 1, n: parseInt(document.getElementById('ord-n1').value) || 1, d: parseInt(document.getElementById('ord-d1').value) || 1 },
+                { id: 2, n: parseInt(document.getElementById('ord-n2').value) || 1, d: parseInt(document.getElementById('ord-d2').value) || 1 },
+                { id: 3, n: parseInt(document.getElementById('ord-n3').value) || 1, d: parseInt(document.getElementById('ord-d3').value) || 1 },
+                { id: 4, n: parseInt(document.getElementById('ord-n4').value) || 1, d: parseInt(document.getElementById('ord-d4').value) || 1 }
+            ];
+
+            list.forEach(item => { item.val = item.n / item.d; });
+
+            // Render Bar Graph Visuals
+            const barContainer = document.getElementById('order-bar-container');
+            barContainer.innerHTML = '';
+
+            const colors = ['bg-burgundy-600', 'bg-amber-500', 'bg-emerald-600', 'bg-sky-600'];
+
+            list.forEach((item, idx) => {
+                const perc = Math.min(100, Math.round(item.val * 100));
+                const barRow = document.createElement('div');
+                barRow.className = "space-y-1";
+                barRow.innerHTML = `
+                    <div class="flex justify-between text-xs font-bold text-slate-700">
+                        <span>Pecahan ${item.n}/${item.d}</span>
+                        <span>${perc}% (${item.val.toFixed(2)})</span>
+                    </div>
+                    <div class="w-full h-4 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                        <div class="h-full ${colors[idx]} transition-all duration-500 rounded-full" style="width: ${perc}%"></div>
+                    </div>
+                `;
+                barContainer.appendChild(barRow);
+            });
+
+            // Calculate Common Denominator (KPK)
+            const commonDen = list.reduce((acc, item) => lcm(acc, item.d), 1);
+            list.forEach(item => { item.adjN = item.n * (commonDen / item.d); });
+
+            // Sort ascending
+            const sortedList = [...list].sort((a, b) => a.val - b.val);
+
+            document.getElementById('order-result-text').innerText = sortedList.map(x => `${x.n}/${x.d}`).join('  <  ');
+
+            document.getElementById('order-steps').innerHTML = `
+                <p>• Step 1: Samakan semua penyebut dengan KPK(${list.map(x=>x.d).join(', ')}) = <strong>${commonDen}</strong></p>
+                <p>• Step 2: Konversi pecahan ke penyebut ${commonDen}: ${list.map(x => `<strong>${x.adjN}/${commonDen}</strong> (${x.n}/${x.d})`).join(', ')}</p>
+                <p>• Step 3: Urutkan pembilangnya: ${sortedList.map(x=>x.adjN).join(' < ')} ➔ <strong>${sortedList.map(x => `${x.n}/${x.d}`).join(' < ')}</strong></p>
+            `;
+        }
+
+        // --- SUB MATERI 3: OPERATION LOGIC ---
+        function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
+        function lcm(a, b) { return (a * b) / gcd(a, b); }
+
+        function calcOperation() {
+            const n1 = parseInt(document.getElementById('op-n1').value) || 1;
+            const d1 = parseInt(document.getElementById('op-d1').value) || 1;
+            const n2 = parseInt(document.getElementById('op-n2').value) || 1;
+            const d2 = parseInt(document.getElementById('op-d2').value) || 1;
+            const op = document.getElementById('op-type').value;
+
+            const commonDen = lcm(d1, d2);
+            const adjN1 = n1 * (commonDen / d1);
+            const adjN2 = n2 * (commonDen / d2);
+
+            let resN = op === '+' ? adjN1 + adjN2 : adjN1 - adjN2;
+            let resD = commonDen;
+
+            const g = Math.abs(gcd(resN, resD));
+            const simpN = resN / g;
+            const simpD = resD / g;
+
+            document.getElementById('op-result').innerText = `${simpN} / ${simpD}`;
+
+            document.getElementById('op-steps').innerHTML = `
+                <p>1. Cari KPK dari penyebut ${d1} dan ${d2} ➔ <strong>KPK = ${commonDen}</strong></p>
+                <p>2. Samakan pecahan: (${n1}×${commonDen / d1})/<strong>${commonDen}</strong> ${op} (${n2}×${commonDen / d2})/<strong>${commonDen}</strong></p>
+                <p>3. Operasikan pembilang: ${adjN1}/${commonDen} ${op} ${adjN2}/${commonDen} = <strong>${resN}/${commonDen}</strong></p>
+                ${g > 1 ? `<p>4. Sederhanakan pecahan (dibagi ${g}): <strong>${simpN}/${simpD}</strong></p>` : ''}
+            `;
+        }
+
+        // --- LATIHAN SOAL (10 ITEMS) ---
+        const latihanData = [
+            { id: 1, q: "Manakah pecahan di bawah ini yang senilai dengan 1/2?", opt: ["2/4", "2/3", "3/5", "1/4"], ans: 0, exp: "1/2 dikali 2/2 = 2/4." },
+            { id: 2, q: "Perhatikan pecahan: 3/5 ... 4/5. Tanda perbandingan yang tepat adalah:", opt: ["<", ">", "=", "≥"], ans: 0, exp: "Jika penyebut sama (5), 3 lebih kecil dari 4 (3 < 4)." },
+            { id: 3, q: "Berapakah hasil dari 1/4 + 2/4?", opt: ["3/4", "3/8", "1/8", "2/4"], ans: 0, exp: "Penyebut sudah sama (4), jadi 1 + 2 = 3/4." },
+            { id: 4, q: "Pecahan campuran dari 7/3 adalah...", opt: ["2 (1/3)", "1 (4/3)", "2 (2/3)", "3 (1/3)"], ans: 0, exp: "7 ÷ 3 = 2 sisa 1, jadi 2 (1/3)." },
+            { id: 5, q: "Hasil dari 1/2 + 1/3 adalah...", opt: ["5/6", "2/5", "1/6", "3/6"], ans: 0, exp: "Samakan penyebut ke 6: 3/6 + 2/6 = 5/6." },
+            { id: 6, q: "Hasil pengurangan dari 3/4 - 1/2 adalah...", opt: ["1/4", "2/2", "1/2", "2/4"], ans: 0, exp: "Ubah 1/2 menjadi 2/4, lalu 3/4 - 2/4 = 1/4." },
+            { id: 7, q: "Urutan pecahan 1/4, 1/2, 1/3 dari terkecil ke terbesar adalah...", opt: ["1/4, 1/3, 1/2", "1/2, 1/3, 1/4", "1/3, 1/4, 1/2", "1/4, 1/2, 1/3"], ans: 0, exp: "1/4 (0.25) < 1/3 (0.33) < 1/2 (0.50)." },
+            { id: 8, q: "Manakah pecahan terkecil di antara berikut: 1/2, 1/3, 1/4, 1/5?", opt: ["1/5", "1/2", "1/3", "1/4"], ans: 0, exp: "Makin besar penyebutnya (dengan pembilang 1), nilainya makin kecil." },
+            { id: 9, q: "Bentuk sederhana dari 6/12 adalah...", opt: ["1/2", "2/3", "3/4", "1/3"], ans: 0, exp: "Masing-masing dibagi 6 ➔ 1/2." },
+            { id: 10, q: "2/3 dari 12 buah apel adalah...", opt: ["8 apel", "6 apel", "4 apel", "9 apel"], ans: 0, exp: "(12 ÷ 3) × 2 = 8 apel." }
+        ];
+
+        let userLatihanAnswers = {};
+
+        function renderLatihan() {
+            const container = document.getElementById('latihan-container');
+            container.innerHTML = '';
+
+            latihanData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-2xl shadow-md border border-burgundy-100 space-y-4";
+                card.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <span class="w-8 h-8 rounded-full bg-burgundy-800 text-white font-bold flex items-center justify-center flex-shrink-0 text-sm">${index + 1}</span>
+                        <p class="font-bold text-slate-800 text-base pt-1">${item.q}</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-11">
+                        ${item.opt.map((opt, i) => `
+                            <button onclick="selectLatihanOpt(${item.id}, ${i})" id="lat-opt-${item.id}-${i}" class="lat-btn-${item.id} p-3 rounded-xl border border-slate-200 text-left font-semibold text-slate-700 hover:bg-burgundy-50 transition">
+                                ${['A', 'B', 'C', 'D'][i]}. ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="lat-exp-${item.id}" class="hidden pl-11 p-3 bg-burgundy-50 rounded-xl border border-burgundy-200 text-xs text-burgundy-900 font-medium">
+                        💡 <strong>Pembahasan:</strong> ${item.exp}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectLatihanOpt(qId, optIdx) {
+            userLatihanAnswers[qId] = optIdx;
+            const item = latihanData.find(x => x.id === qId);
+
+            document.querySelectorAll(`.lat-btn-${qId}`).forEach(btn => {
+                btn.classList.remove('bg-emerald-100', 'border-emerald-500', 'bg-rose-100', 'border-rose-500', 'text-emerald-900', 'text-rose-900');
+            });
+
+            const selectedBtn = document.getElementById(`lat-opt-${qId}-${optIdx}`);
+            const expBox = document.getElementById(`lat-exp-${qId}`);
+
+            if (optIdx === item.ans) {
+                selectedBtn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+            } else {
+                selectedBtn.classList.add('bg-rose-100', 'border-rose-500', 'text-rose-900');
+            }
+
+            expBox.classList.remove('hidden');
+            updateLatihanScore();
+        }
+
+        function updateLatihanScore() {
+            let correct = 0;
+            latihanData.forEach(item => {
+                if (userLatihanAnswers[item.id] === item.ans) correct++;
+            });
+            document.getElementById('latihan-score-display').innerText = `${correct * 10} / 100`;
+        }
+
+        function resetLatihan() {
+            userLatihanAnswers = {};
+            document.getElementById('latihan-score-display').innerText = `0 / 100`;
+            renderLatihan();
+        }
+
+        // --- KUIS HOTS ---
+        const hotsData = [
+            { id: 1, q: "Ibu membeli 3/4 kg gula pasir. Ibu menggunakan 1/2 kg gula untuk membuat kue, kemudian membeli lagi 1/4 kg gula. Berapa kg sisa gula pasir Ibu sekarang?", opt: ["1/2 kg", "1/4 kg", "3/4 kg", "1 kg"], ans: 0, exp: "3/4 - 1/2 + 1/4 = 3/4 - 2/4 + 1/4 = 2/4 = 1/2 kg." },
+            { id: 2, q: "Andi memakan 2/8 bagian pizza, sedangkan Budi memakan 1/4 bagian pizza yang sama. Siapakah yang memakan pizza lebih banyak?", opt: ["Sama banyak (2/8 = 1/4)", "Andi lebih banyak", "Budi lebih banyak", "Tidak bisa ditentukan"], ans: 0, exp: "2/8 disederhanakan menjadi 1/4, jadi Andi dan Budi memakan jumlah yang sama." },
+            { id: 3, q: "Sebuah sawah seluas 1 hektar ditanami padi 2/5 bagian, jagung 1/3 bagian, dan sisanya ditanami kedelai. Berapa bagian sawah yang ditanami kedelai?", opt: ["4/15 bagian", "7/15 bagian", "1/5 bagian", "2/15 bagian"], ans: 0, exp: "1 - (2/5 + 1/3) = 1 - (6/15 + 5/15) = 1 - 11/15 = 4/15 bagian." },
+            { id: 4, q: "Ayah memiliki tali sepanjang 2 (1/2) meter. Dipotong untuk mengikat kayu 1 (1/4) meter. Berapa meter sisa tali Ayah?", opt: ["1 (1/4) meter", "1 (1/2) meter", "1 meter", "3/4 meter"], ans: 0, exp: "5/2 - 5/4 = 10/4 - 5/4 = 5/4 = 1 (1/4) meter." },
+            { id: 5, q: "Siswa kelas 5 terdiri dari 30 anak. Sebanyak 1/3 menyukai futsal, 2/5 menyukai basket, dan sisanya menyukai renang. Berapa banyak siswa yang menyukai renang?", opt: ["8 siswa", "10 siswa", "12 siswa", "6 siswa"], ans: 0, exp: "Futsal = 10 anak, Basket = 12 anak. Renang = 30 - (10 + 12) = 8 siswa." }
+        ];
+
+        let userHotsAnswers = {};
+
+        function renderHots() {
+            const container = document.getElementById('hots-container');
+            container.innerHTML = '';
+
+            hotsData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-2xl shadow-md border-l-8 border-amber-500 space-y-4";
+                card.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <span class="w-8 h-8 rounded-full bg-amber-500 text-burgundy-950 font-black flex items-center justify-center flex-shrink-0 text-sm">${index + 1}</span>
+                        <p class="font-bold text-slate-800 text-base pt-1">${item.q}</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-11">
+                        ${item.opt.map((opt, i) => `
+                            <button onclick="selectHotsOpt(${item.id}, ${i})" id="hots-opt-${item.id}-${i}" class="hots-btn-${item.id} p-3 rounded-xl border border-slate-200 text-left font-semibold text-slate-700 hover:bg-amber-50 transition">
+                                ${['A', 'B', 'C', 'D'][i]}. ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="hots-exp-${item.id}" class="hidden pl-11 p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-950 font-medium">
+                        🧠 <strong>Analisis HOTS:</strong> ${item.exp}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectHotsOpt(qId, optIdx) {
+            userHotsAnswers[qId] = optIdx;
+            const item = hotsData.find(x => x.id === qId);
+
+            document.querySelectorAll(`.hots-btn-${qId}`).forEach(btn => {
+                btn.classList.remove('bg-emerald-100', 'border-emerald-500', 'bg-rose-100', 'border-rose-500', 'text-emerald-900', 'text-rose-900');
+            });
+
+            const selectedBtn = document.getElementById(`hots-opt-${qId}-${optIdx}`);
+            const expBox = document.getElementById(`hots-exp-${qId}`);
+
+            if (optIdx === item.ans) {
+                selectedBtn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+            } else {
+                selectedBtn.classList.add('bg-rose-100', 'border-rose-500', 'text-rose-900');
+            }
+
+            expBox.classList.remove('hidden');
+            updateHotsScore();
+        }
+
+        function updateHotsScore() {
+            let correct = 0;
+            hotsData.forEach(item => {
+                if (userHotsAnswers[item.id] === item.ans) correct++;
+            });
+            document.getElementById('hots-score-display').innerText = `${correct * 20} / 100`;
+        }
+
+        function resetHots() {
+            userHotsAnswers = {};
+            document.getElementById('hots-score-display').innerText = `0 / 100`;
+            renderHots();
+        }
+
+        // --- GAME ULAR TANGGA PECAHAN LOGIC ---
+        let playerPos = 1;
+        let isDiceRolling = false;
+        let currentQuestion = null;
+
+        const snakeLaddersMap = {
+            3: 11,   // Tangga naik
+            14: 22,  // Tangga naik
+            19: 27,  // Tangga naik
+            17: 7,   // Ular turun
+            24: 12,  // Ular turun
+            29: 15   // Ular turun
+        };
+
+        const snakeBankQuestions = [
+            // Pecahan Senilai
+            { cat: "Pecahan Senilai", q: "Manakah pecahan yang SENILAI dengan 2/3?", opt: ["4/6", "3/4", "2/6", "5/6"], ans: 0 },
+            { cat: "Pecahan Senilai", q: "Pecahan 3/5 senilai dengan pecahan...", opt: ["6/10", "5/3", "4/5", "3/10"], ans: 0 },
+            // Membandingkan
+            { cat: "Membandingkan Pecahan", q: "Isi titik-titik: 2/5 ... 3/5", opt: ["<", ">", "=", "≥"], ans: 0 },
+            { cat: "Membandingkan Pecahan", q: "Manakah pernyataan perbandingan yang BENAR?", opt: ["1/2 > 1/4", "1/3 > 1/2", "2/4 < 1/4", "3/5 = 4/5"], ans: 0 },
+            // Mengurutkan
+            { cat: "Mengurutkan Pecahan", q: "Urutkan dari yang TERKECIL: 3/4, 1/4, 2/4", opt: ["1/4, 2/4, 3/4", "3/4, 2/4, 1/4", "2/4, 1/4, 3/4", "1/4, 3/4, 2/4"], ans: 0 },
+            { cat: "Mengurutkan Pecahan", q: "Pecahan terkecil dari 1/3, 1/2, 1/6 adalah...", opt: ["1/6", "1/3", "1/2", "Semua sama"], ans: 0 },
+            // Penjumlahan & Pengurangan
+            { cat: "Penjumlahan Pecahan", q: "Hasil dari 1/5 + 2/5 adalah...", opt: ["3/5", "3/10", "1/5", "4/5"], ans: 0 },
+            { cat: "Pengurangan Pecahan", q: "Hasil dari 5/8 - 2/8 adalah...", opt: ["3/8", "3/0", "7/8", "1/8"], ans: 0 },
+            { cat: "Penjumlahan Beda Penyebut", q: "Hasil dari 1/2 + 1/4 adalah...", opt: ["3/4", "2/6", "1/6", "2/4"], ans: 0 }
+        ];
+
+        function initSnakeBoard() {
+            const board = document.getElementById('snakes-board');
+            if (!board) return;
+            board.innerHTML = '';
+
+            // Generate 30 tiles (top-down 5 rows of 6)
+            const tileRows = [
+                [30, 29, 28, 27, 26, 25],
+                [19, 20, 21, 22, 23, 24],
+                [18, 17, 16, 15, 14, 13],
+                [7, 8, 9, 10, 11, 12],
+                [6, 5, 4, 3, 2, 1]
+            ];
+
+            tileRows.forEach(row => {
+                row.forEach(num => {
+                    const tile = document.createElement('div');
+                    let bgClass = (num % 3 === 0) ? 'tile-gradient-1' : (num % 2 === 0 ? 'tile-gradient-2' : 'tile-gradient-3');
+
+                    if (snakeLaddersMap[num] && snakeLaddersMap[num] > num) bgClass = 'tile-gradient-ladder';
+                    if (snakeLaddersMap[num] && snakeLaddersMap[num] < num) bgClass = 'tile-gradient-snake';
+
+                    tile.className = `${bgClass} h-14 sm:h-16 rounded-xl flex flex-col justify-between p-1.5 font-bold shadow-sm relative border border-white/40`;
+                    
+                    let specialIcon = '';
+                    if (snakeLaddersMap[num] > num) specialIcon = '<i class="fa-solid fa-arrow-up-long text-amber-900 text-xs"></i>';
+                    if (snakeLaddersMap[num] < num) specialIcon = '<i class="fa-solid fa-worm text-rose-900 text-xs"></i>';
+
+                    tile.innerHTML = `
+                        <div class="flex justify-between items-center w-full">
+                            <span class="text-xs sm:text-sm font-black opacity-80">${num}</span>
+                            ${specialIcon}
+                        </div>
+                        <div id="snake-tile-player-${num}" class="flex items-center justify-center">
+                            ${num === playerPos ? '<div class="w-7 h-7 rounded-full bg-burgundy-900 text-amber-300 font-black text-xs flex items-center justify-center shadow-lg border-2 border-amber-300 animate-bounce">🏃</div>' : ''}
+                        </div>
+                    `;
+                    board.appendChild(tile);
+                });
+            });
+
+            document.getElementById('snake-player-pos').innerText = `Petak ${playerPos}`;
+        }
+
+        function rollSnakeDice() {
+            if (isDiceRolling) return;
+            isDiceRolling = true;
+
+            const diceBtn = document.getElementById('roll-dice-btn');
+            const diceDisplay = document.getElementById('dice-display');
+            const logBox = document.getElementById('snake-game-log');
+
+            diceBtn.disabled = true;
+            logBox.innerText = "Mengocok dadu...";
+
+            let count = 0;
+            const diceFaces = ['1', '2', '3', '4', '5', '6'];
+            
+            const rollInterval = setInterval(() => {
+                const randVal = Math.floor(Math.random() * 6) + 1;
+                diceDisplay.innerText = randVal;
+                count++;
+
+                if (count > 12) {
+                    clearInterval(rollInterval);
+                    const diceResult = Math.floor(Math.random() * 6) + 1;
+                    diceDisplay.innerText = diceResult;
+
+                    logBox.innerText = `Kamu mendapatkan dadu ${diceResult}! Jawab soal untuk maju!`;
+                    isDiceRolling = false;
+                    diceBtn.disabled = false;
+
+                    // Trigger Question Modal before moving
+                    triggerSnakeQuestion(diceResult);
+                }
+            }, 80);
+        }
+
+        function triggerSnakeQuestion(steps) {
+            const modal = document.getElementById('snake-modal');
+            const catLabel = document.getElementById('snake-modal-category');
+            const qText = document.getElementById('snake-modal-question');
+            const optionsBox = document.getElementById('snake-modal-options');
+            const feedback = document.getElementById('snake-modal-feedback');
+
+            feedback.classList.add('hidden');
+
+            // Pick random question from bank
+            currentQuestion = snakeBankQuestions[Math.floor(Math.random() * snakeBankQuestions.length)];
+            currentQuestion.steps = steps;
+
+            catLabel.innerText = currentQuestion.cat;
+            qText.innerText = currentQuestion.q;
+
+            optionsBox.innerHTML = '';
+            currentQuestion.opt.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "p-3.5 rounded-2xl bg-burgundy-50 border-2 border-burgundy-200 hover:bg-burgundy-100 font-bold text-burgundy-950 text-left transition flex items-center gap-2";
+                btn.innerHTML = `<span class="w-6 h-6 rounded-full bg-burgundy-800 text-white text-xs flex items-center justify-center font-bold">${['A','B','C','D'][idx]}</span> ${opt}`;
+                btn.onclick = () => answerSnakeQuestion(idx);
+                optionsBox.appendChild(btn);
+            });
+
+            modal.classList.remove('hidden');
+        }
+
+        function answerSnakeQuestion(selectedIdx) {
+            const modal = document.getElementById('snake-modal');
+            const feedback = document.getElementById('snake-modal-feedback');
+            const logBox = document.getElementById('snake-game-log');
+
+            if (selectedIdx === currentQuestion.ans) {
+                feedback.className = "p-3 rounded-xl text-center font-bold text-sm bg-emerald-100 text-emerald-900 border border-emerald-300";
+                feedback.innerText = "🎉 JAWABAN BENAR! Karakter kamu maju!";
+                feedback.classList.remove('hidden');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    movePlayerSteps(currentQuestion.steps);
+                }, 1000);
+            } else {
+                feedback.className = "p-3 rounded-xl text-center font-bold text-sm bg-rose-100 text-rose-900 border border-rose-300";
+                feedback.innerText = "❌ JAWABAN SALAH! Kamu bertahan di petak saat ini.";
+                feedback.classList.remove('hidden');
+
+                logBox.innerText = "Jawaban salah! Kamu tidak dapat melangkah kali ini.";
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 1200);
+            }
+        }
+
+        function movePlayerSteps(steps) {
+            playerPos += steps;
+            const logBox = document.getElementById('snake-game-log');
+
+            if (playerPos >= 30) {
+                playerPos = 30;
+                initSnakeBoard();
+                logBox.innerText = "🏆 SELAMAT! Kamu berhasil mencapai Petak 30 dan memenangkan permainan Ular Tangga Pecahan!";
+                alert("🎉 Selamat! Kamu telah berhasil menamatkan Game Ular Tangga Pecahan!");
+                return;
+            }
+
+            // Check Snake or Ladder
+            if (snakeLaddersMap[playerPos]) {
+                const newTarget = snakeLaddersMap[playerPos];
+                if (newTarget > playerPos) {
+                    logBox.innerText = `Hebat! Kamu naik TANGGA dari Petak ${playerPos} ke Petak ${newTarget}!`;
+                } else {
+                    logBox.innerText = `Awas! Kamu terkena ULAR dan turun dari Petak ${playerPos} ke Petak ${newTarget}!`;
+                }
+                playerPos = newTarget;
+            } else {
+                logBox.innerText = `Kamu berhasil maju ke Petak ${playerPos}!`;
+            }
+
+            initSnakeBoard();
+        }
+
+        function resetSnakeGame() {
+            playerPos = 1;
+            document.getElementById('snake-game-log').innerText = "Game direset! Kocok dadu untuk memulai.";
+            document.getElementById('dice-display').innerText = "🎲";
+            initSnakeBoard();
+        }
+
+        // --- REFLEKSI FORM LOGIC ---
+        function handleRefleksiSubmit(e) {
+            e.preventDefault();
+            document.getElementById('refleksi-feedback').classList.remove('hidden');
+            e.target.reset();
+        }
+
+        // --- INITIALIZATION ---
+        window.onload = function() {
+            renderLatihan();
+            renderHots();
+            renderMateri1Canvas();
+            updateCompareSim();
+            simulasiUrutanPecahan();
+            initSnakeBoard();
+        };
+    </script>
+</body>
+</html>
